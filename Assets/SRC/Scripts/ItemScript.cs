@@ -7,14 +7,14 @@ public class ItemScript : MonoBehaviour
     private ItemScriptable _brain;
     private Image _image;
     private RectTransform _rectTransform;
-
+    private GameplayScript _gmScript;
     public void Init(ItemScriptable brain)
     {
         _brain = brain;
         _rectTransform = GetComponent<RectTransform>();
         SetSprite();
         SetPosition();
-        SetRotation();
+        //SetRotation();
     }
 
     private void SetSprite()
@@ -43,6 +43,14 @@ public class ItemScript : MonoBehaviour
         float randomZ = Random.Range(0, 10);
 
         _rectTransform.rotation = new Quaternion(randomX, randomY, randomZ, 0);
+    }
+
+    public void SlectItem()
+    {
+        _gmScript = GetComponentInParent<GameplayScript>();
+        Debug.Log("Click");
+        if (_gmScript == null) return;
+        _gmScript.AddItenOnBar(this.gameObject);
     }
     
 }
