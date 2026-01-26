@@ -28,7 +28,7 @@ public class ItemScript : MonoBehaviour
     private void SetPosition()
     {
         if (!_brain) return;
-        float randomX = Random.Range(-200f, 550f);
+        float randomX = Random.Range(-400f, 400f);
         float randomY = Random.Range(-400, 400);
         float randomZ = Random.Range(0, 10);
 
