@@ -75,5 +75,10 @@ public class ItemScript : MonoBehaviour
         _gmScript.TargetCount(_brain.Type);
         _imageRect.rotation = Quaternion.Euler(0, 0, 90);
     }
+
+    public int GetItemType()
+    {
+        return _brain.Type;
+    }
     
 }
