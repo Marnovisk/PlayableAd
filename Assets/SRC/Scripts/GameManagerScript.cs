@@ -26,4 +26,4 @@ public class GameManagerScript : MonoBehaviour
         }
 
     }
-}
+} 

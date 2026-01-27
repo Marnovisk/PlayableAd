@@ -477,6 +477,7 @@ MonoBehaviour:
   - {fileID: 1117014345}
   - {fileID: 1139182266}
   - {fileID: 419718616}
+  _targetsCount: 
   _bgImage: {fileID: 21300000, guid: 552ddaff9e2f94047a72e6434b7874b7, type: 3}
   _index: 0
 --- !u!1 &410087039
@@ -1117,6 +1118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayScript
   _collectBar: {fileID: 1061691489}
+  _targetBar: {fileID: 408108075}
 --- !u!1 &1028788119
 GameObject:
   m_ObjectHideFlags: 0

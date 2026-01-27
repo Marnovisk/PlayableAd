@@ -46,7 +46,6 @@ public class ItemScript : MonoBehaviour
         if(!_image) return;
 
         _image.sprite = _brain.Image;
-        Debug.Log("Sprite Setted");
     }
 
     private void SetPosition()
@@ -68,12 +67,12 @@ public class ItemScript : MonoBehaviour
         _imageRect.rotation = Quaternion.Euler(0, 0, randomZ);
     }
 
-    public void SlectItem()
+    public void SelectItem()
     {
         _gmScript = GetComponentInParent<GameplayScript>();
-        Debug.Log("Click");
         if (_gmScript == null) return;
         _gmScript.AddItenOnBar(this.gameObject);
+        _gmScript.TargetCount(_brain.Type);
         _imageRect.rotation = Quaternion.Euler(0, 0, 90);
     }
     

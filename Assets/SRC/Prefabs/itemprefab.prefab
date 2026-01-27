@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5144001194897275544}
         m_TargetAssemblyTypeName: ItemScript, Assembly-CSharp
-        m_MethodName: SlectItem
+        m_MethodName: SelectItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
