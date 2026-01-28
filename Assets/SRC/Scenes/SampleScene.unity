@@ -479,6 +479,7 @@ MonoBehaviour:
   - {fileID: 419718616}
   _targetsCount: 
   _bgImage: {fileID: 21300000, guid: 552ddaff9e2f94047a72e6434b7874b7, type: 3}
+  _gameManagerScript: {fileID: 729862941}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +804,7 @@ MonoBehaviour:
   _gmCanva: {fileID: 946583365}
   _barScript: {fileID: 408108075}
   _timeText: {fileID: 806828262}
+  _itensQTD: 15
 --- !u!1 &793782752
 GameObject:
   m_ObjectHideFlags: 0

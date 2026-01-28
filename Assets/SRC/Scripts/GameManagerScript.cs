@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject _gmCanva;
     public TargetBarScript _barScript;
     public TMP_Text _timeText;
+    public int _itensQTD;
     private ItemScript _itemScript;
     private float _time;
 
@@ -17,7 +19,7 @@ public class GameManagerScript : MonoBehaviour
         _time = 30.0f;
         foreach (ItemScriptable item in _brains)
         {
-            int value = Random.Range(20, 40);
+            int value = _itensQTD;
             for(int i = 0; i < value; i++)
             {
                 GameObject itemInstace = Instantiate(_itemPrefab, _gmCanva.transform);
@@ -26,7 +28,6 @@ public class GameManagerScript : MonoBehaviour
             }
 
             _barScript.SetTargetItem(item.Image, value);
-
         }
 
     }
@@ -49,8 +50,16 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public void ItensSum(int type1, int type2, int type3)
+    {
+        if (type1 == 0 && type2 == 0 && type3 == 0)
+        {
+            Debug.Log("Win");
+        }
+    }
+
     void GameOver()
     {
-
+        Debug.Log("Lose");
     }
 } 

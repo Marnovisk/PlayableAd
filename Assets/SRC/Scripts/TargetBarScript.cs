@@ -9,10 +9,11 @@ public class TargetBarScript : MonoBehaviour
     public List<GameObject> targets;
     public List<int> _targetsCount;
     public Sprite _bgImage;
+    private int _index = 0;
+    public GameManagerScript _gameManagerScript;
 
     public void SetTargetItem(Sprite image, int number)
-    {
-        int _index = 0;
+    {      
 
         if (_index <= targets.Count)
         {
@@ -40,5 +41,7 @@ public class TargetBarScript : MonoBehaviour
         {
             currentTarget.GetComponentInChildren<TMP_Text>().SetText(number.ToString());
         }
+
+        _gameManagerScript.ItensSum(_targetsCount[0], _targetsCount[1], _targetsCount[2]);
     }
 }
