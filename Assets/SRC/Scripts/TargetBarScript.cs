@@ -9,11 +9,12 @@ public class TargetBarScript : MonoBehaviour
     public List<GameObject> targets;
     public List<int> _targetsCount;
     public Sprite _bgImage;
-    [SerializeField] private int _index = 0;
 
     public void SetTargetItem(Sprite image, int number)
     {
-        if(_index <= targets.Count)
+        int _index = 0;
+
+        if (_index <= targets.Count)
         {
             GameObject currentTarget = targets[_index];
 

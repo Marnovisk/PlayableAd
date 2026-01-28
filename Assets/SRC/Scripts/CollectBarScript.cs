@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class CollectBarScript : MonoBehaviour
 {
     public GameObject BarIMG;
-    private List<GameObject> _itens = new List<GameObject>();
+    [SerializeField] private List<GameObject> _itens = new List<GameObject>();
     private int _maxItens = 7;
     private List<int> _typeCount = new List<int> { 0, 0, 0 };
 
@@ -14,33 +15,31 @@ public class CollectBarScript : MonoBehaviour
         {
             _itens.Add(item);
             item.transform.SetParent(BarIMG.transform);
-            CheckItem(item);
+            MatchItens(item);
         } 
     }
 
-    void CheckItem(GameObject newItem)
+    void MatchItens(GameObject newItem)
     {
-        int curretnType = newItem.GetComponent<ItemScript>().GetItemType();
+        RealignItens(newItem);
+        int curretType = newItem.GetComponent<ItemScript>().GetItemType();
         int curretnCount = 0;
+
         
         foreach (GameObject item in _itens)
         {
-            if(curretnType == item.GetComponent<ItemScript>().GetItemType())
+            if(curretType == item.GetComponent<ItemScript>().GetItemType())
             {
                 curretnCount++;
             }
         }
 
-        _typeCount[curretnType] = curretnCount;
-
+        _typeCount[curretType] = curretnCount;
 
         if (curretnCount >= 3)
         {
-            DestroyItem(curretnType);
+            DestroyItem(curretType);
         }
-
-
-        Debug.Log("Type: " + curretnType + "Has: " + curretnCount);
 
     }
 
@@ -51,9 +50,42 @@ public class CollectBarScript : MonoBehaviour
             GameObject item = _itens[i];
             if (type == item.GetComponent<ItemScript>().GetItemType())
             {
-                _itens.Remove(item);
+                _itens.RemoveAt(i);
                 Destroy(item);
             }
         }
     }
+
+    void RealignItens(GameObject item)
+    {
+        int type = item.GetComponent<ItemScript>().GetItemType();
+        _itens.Remove(item);
+        int targetIndex = -1;
+
+        for (int i = _itens.Count - 1; i >= 0; i--)
+        {
+
+            if (_itens[i].GetComponent<ItemScript>().GetItemType() == type)
+            {
+                targetIndex = i + 1;
+                break;
+            }
+        }
+
+        if (targetIndex != -1)
+        {
+            _itens.Insert(targetIndex, item);
+        }
+        else
+        {
+            _itens.Add(item);
+        }
+
+        for (int i = 0; i < _itens.Count; i++)
+        {
+            _itens[i].transform.SetSiblingIndex(i);
+        }
+    }
+
+    
 }
