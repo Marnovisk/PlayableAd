@@ -8,14 +8,9 @@ using static UnityEditor.Progress;
 public class GameManagerScript : MonoBehaviour
 {
     public List<ItemScriptable> _brains;
+
     public GameObject _itemPrefab;
-    public GameObject _gmCanva;
-    public TargetBarScript _barScript;
-    public TMP_Text _timeText;
-    public int _itensQTD;
-    private ItemScript _itemScript;
-    private float _time;
-    private bool _done = false;
+
     public GameObject _infoBar;
     public GameObject _targetPrefab;
     public GameObject _collectBar;
@@ -24,13 +19,33 @@ public class GameManagerScript : MonoBehaviour
     public GameObject _gameOverStars;
     public GameObject _gameOverBG;
     public GameObject _gameOverBTN;
+
+    public Slider _timeSlider;
+
+    public GameObject _gmCanva;
+
+    public AudioManagerScript _audioManagerScript;
+
+    public TargetBarScript _barScript;
+
+    private ItemScript _itemScript;
+
+    public TMP_Text _timeText;
+
+    public int _itensQTD;
+    
+    public float _time;
+
+    private bool _done = false;
+
+    private bool _alertPlayed = false;
+
     public Sprite _stars;
     public Sprite _heart;
     public Sprite _winBTN;
     public Sprite _loseBTN;
     public Sprite _winBG;
     public Sprite _loseBG;
-
 
 
     private void Start()
@@ -64,11 +79,20 @@ public class GameManagerScript : MonoBehaviour
             if (_time >= 0)
             {
                 _time -= Time.deltaTime;
-                _timeText.SetText("0:" + Mathf.CeilToInt(_time).ToString());
+                int seconds = Mathf.CeilToInt(_time);
+                _timeText.SetText($"0:{seconds:00}");
+                _timeSlider.value = seconds;
+
+                if (_time <= 10 && !_alertPlayed)
+                {
+                    _audioManagerScript.PlayAlert();
+                    _alertPlayed = true;
+                    Debug.Log("Alert on GManager");
+                }
             }
             else
             {
-                GameOver();
+                GameOverScreenCall(false);
             }
         }
     }
@@ -77,17 +101,8 @@ public class GameManagerScript : MonoBehaviour
     {
         if (type1 == 0 && type2 == 0 && type3 == 0)
         {
-            _done = true;
             GameOverScreenCall(true);
-            Debug.Log("Win");
         }
-    }
-
-    void GameOver()
-    {
-        _done = true;
-        GameOverScreenCall(false);
-        Debug.Log("Lose");
     }
 
     void GameOverScreenCall(bool win)
@@ -96,8 +111,11 @@ public class GameManagerScript : MonoBehaviour
         _infoBar.SetActive(false);
         _targetPrefab.SetActive(false);
         _collectBar.SetActive(false);
+        _audioManagerScript.PlayGameOver(win);
 
-        if(win)
+        _done = true;
+
+        if (win)
         {
             _gameOverBG.GetComponent<Image>().sprite = _winBG;
             _gameOverheart.SetActive(false);

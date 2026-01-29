@@ -5,9 +5,11 @@ using UnityEngine;
 public class CollectBarScript : MonoBehaviour
 {
     public GameObject BarIMG;
-    [SerializeField] private List<GameObject> _itens = new List<GameObject>();
+    public AudioManagerScript _audioManagerScript;
+    private List<GameObject> _itens = new List<GameObject>();
     private int _maxItens = 7;
     private List<int> _typeCount = new List<int> { 0, 0, 0 };
+
 
     public void AddItem(GameObject item)
     {
@@ -51,7 +53,8 @@ public class CollectBarScript : MonoBehaviour
             if (type == item.GetComponent<ItemScript>().GetItemType())
             {
                 _itens.RemoveAt(i);
-                Destroy(item);
+                item.GetComponent<ItemScript>().ItemDestroyer();
+                _audioManagerScript.PlayMatch();
             }
         }
     }
