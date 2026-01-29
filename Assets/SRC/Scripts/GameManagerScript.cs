@@ -147,4 +147,9 @@ public class GameManagerScript : MonoBehaviour
             _gameOverBTN.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
+
+    public void OpenGameSite()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.fiogonia.mmm&hl=pt_BR");
+    }
 } 

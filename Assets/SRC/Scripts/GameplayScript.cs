@@ -22,8 +22,11 @@ public class GameplayScript : MonoBehaviour
 
         if (_idleTimer >= TimeToShowTutorial)
         {
-            SpawnTutorial(transform.GetChild(0).gameObject, transform);
-            _idleTimer = 0f;
+            if (transform.childCount > 0)
+            {
+                SpawnTutorial(transform.GetChild(0).gameObject, transform);
+                _idleTimer = 0f;
+            }
         }
     }
     public void AddItenOnBar(GameObject item)
