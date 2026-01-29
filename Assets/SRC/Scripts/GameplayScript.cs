@@ -1,6 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class GameplayScript : MonoBehaviour
 {
@@ -8,7 +7,25 @@ public class GameplayScript : MonoBehaviour
     public TargetBarScript _targetBar;
     public GameObject _tutorialPrefab;
     private GameObject _tutorialInstance;
+    private bool _isTutorial = false;
+    private float _idleTimer = 0f;
+    private const float TimeToShowTutorial = 2f;
 
+    private void Update()
+    {
+        if (_tutorialInstance)
+        {
+            _idleTimer = 0f;
+            return;
+        }
+        _idleTimer += Time.deltaTime;
+
+        if (_idleTimer >= TimeToShowTutorial)
+        {
+            SpawnTutorial(transform.GetChild(0).gameObject, transform);
+            _idleTimer = 0f;
+        }
+    }
     public void AddItenOnBar(GameObject item)
     {
         _collectBar.AddItem(item);
@@ -21,8 +38,12 @@ public class GameplayScript : MonoBehaviour
 
     public void SpawnTutorial(GameObject lastItem, Transform spawnTransform)
     {
-        _tutorialInstance = Instantiate(_tutorialPrefab, spawnTransform);
-        _tutorialInstance.transform.position = lastItem.transform.position;
+        if (!_isTutorial)
+        {
+            _tutorialInstance = Instantiate(_tutorialPrefab, spawnTransform);
+            _tutorialInstance.transform.position = lastItem.transform.position;
+            _isTutorial = true;
+        }
     }
 
     public void DestroyTutorial()
@@ -30,6 +51,13 @@ public class GameplayScript : MonoBehaviour
         if (_tutorialInstance != null)
         {
             Destroy(_tutorialInstance);
+            _isTutorial = false;
+            _idleTimer = 0f;
         }
+    }
+
+    public void ItemSelected()
+    {
+        
     }
 }

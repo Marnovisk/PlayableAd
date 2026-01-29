@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class ItemScript : MonoBehaviour
@@ -70,6 +69,7 @@ public class ItemScript : MonoBehaviour
         _gmScript.TargetCount(_brain.Type);
         _imageRect.rotation = Quaternion.Euler(0, 0, 90);
         _gmScript.DestroyTutorial();
+
 
 
     }

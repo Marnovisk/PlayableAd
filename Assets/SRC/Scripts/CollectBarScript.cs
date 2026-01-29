@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class CollectBarScript : MonoBehaviour
 {
@@ -45,20 +43,19 @@ public class CollectBarScript : MonoBehaviour
 
         if (curretCount >= 3)
         {
-            CallMask(newItem, true);
+            CallMask(newItem, true, 0.25f);
             DestroyItem(curretType);
         }
         else
         {
-            CallMask(newItem, false);
+            CallMask(newItem, false, 0.25f);
         }
 
     }
 
     void DestroyItem(int type)
     {
-        GameObject newItem = null;
-        bool itemFound = false;
+        List<GameObject> matchedItems = new List<GameObject>();
 
         for (int i = _itens.Count - 1; i >= 0; i--)
         {
@@ -66,19 +63,22 @@ public class CollectBarScript : MonoBehaviour
             if (type == item.GetComponent<ItemScript>().GetItemType())
             {
                 _itens.RemoveAt(i);
-                item.GetComponent<ItemScript>().ItemDestroyer();
-                _audioManagerScript.PlayMatch();
-                newItem = item;
-                itemFound = true;
+                matchedItems.Add(item);
             }
         }
 
-        
-        if(newItem != null && itemFound)
+        if(matchedItems.Count > 0)
         {
+            _audioManagerScript.PlayMatch();
+            GameObject targetItem = matchedItems[1];
             GameObject VFX = Instantiate(_matchEffect, transform);
-            VFX.GetComponent<MatchEffectScript>().Init(newItem.GetComponent<ItemScript>().GetItemSprite());
-            VFX.transform.position = newItem.transform.position - new Vector3(0,150,0);
+            VFX.GetComponent<MatchEffectScript>().Init(targetItem.GetComponent<ItemScript>().GetItemSprite());
+            VFX.transform.position = targetItem.transform.position;
+        }
+
+        foreach (GameObject item in matchedItems)
+        {
+            item.GetComponent<ItemScript>().ItemDestroyer();
         }
         
     }
@@ -111,17 +111,24 @@ public class CollectBarScript : MonoBehaviour
         for (int i = 0; i < _itens.Count; i++)
         {
             _itens[i].transform.SetSiblingIndex(i);
+            int localType = _itens[i].GetComponent<ItemScript>().GetItemType();
+            if (localType != type)
+            {
+                CallMask(_itens[i], false, 0.8f);
+            }
+
+
         }
 
         MatchItens(item);
     }
 
-    void CallMask(GameObject item, bool third)
+    void CallMask(GameObject item, bool third, float time)
     {
         _VFXMaskInstatnce = Instantiate(_VFXMaskPrefab, _gameplayHUD.transform);
         _VFXMaskInstatnce.transform.position = item.transform.position;
         _VFXMaskInstatnce.GetComponent<RectTransform>().rotation = item.GetComponent<ItemScript>().GetSpriteRect().rotation;
-        _VFXMaskInstatnce.GetComponent<MaskItemScript>().Init(item, third);
+        _VFXMaskInstatnce.GetComponent<MaskItemScript>().Init(item, third, time);
     }
     
 }
