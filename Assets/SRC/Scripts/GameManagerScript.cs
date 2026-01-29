@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -11,6 +12,7 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject _itemPrefab;
 
+    public GameObject _canva;
     public GameObject _infoBar;
     public GameObject _targetPrefab;
     public GameObject _collectBar;
@@ -20,9 +22,11 @@ public class GameManagerScript : MonoBehaviour
     public GameObject _gameOverBG;
     public GameObject _gameOverBTN;
 
-    public Slider _timeSlider;
-
     public GameObject _gmCanva;
+
+    public GameObject _alertImagePrefab;
+
+    public Slider _timeSlider;    
 
     public AudioManagerScript _audioManagerScript;
 
@@ -40,6 +44,10 @@ public class GameManagerScript : MonoBehaviour
 
     private bool _alertPlayed = false;
 
+    private GameObject _alertImageInstace;
+
+    private GameplayScript _gameplayScript;
+
     public Sprite _stars;
     public Sprite _heart;
     public Sprite _winBTN;
@@ -50,8 +58,10 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
+        _gameplayScript = _gmCanva.GetComponent<GameplayScript>();
         _gameOverScreen.SetActive(false);
         _time = 30.0f;
+        GameObject lastItem = null;
         foreach (ItemScriptable item in _brains)
         {
             int value = _itensQTD;
@@ -60,10 +70,18 @@ public class GameManagerScript : MonoBehaviour
                 GameObject itemInstace = Instantiate(_itemPrefab, _gmCanva.transform);
                 _itemScript = itemInstace.GetComponent<ItemScript>();
                 _itemScript.Init(item);
+                lastItem = itemInstace;
             }
 
             _barScript.SetTargetItem(item.Image, value);
+            
         }
+
+        if(lastItem != null)
+        {
+            _gameplayScript.SpawnTutorial(lastItem, _gmCanva.transform);            
+        }
+        
 
     }
 
@@ -87,7 +105,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     _audioManagerScript.PlayAlert();
                     _alertPlayed = true;
-                    Debug.Log("Alert on GManager");
+                    _alertImageInstace = Instantiate(_alertImagePrefab, _canva.transform);
                 }
             }
             else
@@ -112,6 +130,7 @@ public class GameManagerScript : MonoBehaviour
         _targetPrefab.SetActive(false);
         _collectBar.SetActive(false);
         _audioManagerScript.PlayGameOver(win);
+        Destroy(_alertImageInstace);
 
         _done = true;
 

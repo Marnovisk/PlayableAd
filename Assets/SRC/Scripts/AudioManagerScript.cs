@@ -12,7 +12,6 @@ public class AudioManagerScript : MonoBehaviour
     
     public void PlayAlert()
     {
-        Debug.Log("Alert on AudioManager");
         _alertAudio.Play();
     }
 

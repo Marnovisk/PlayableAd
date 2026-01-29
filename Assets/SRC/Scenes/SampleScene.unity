@@ -1135,6 +1135,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9529910407c4c364691241450ce4095a, type: 2}
   - {fileID: 11400000, guid: 44324f3e11699304cbc67982cc78d614, type: 2}
   _itemPrefab: {fileID: 9209489861989206851, guid: 5831498759b61b242b8efd2eb73da901, type: 3}
+  _canva: {fileID: 1762580613}
   _infoBar: {fileID: 1660798816}
   _targetPrefab: {fileID: 408108073}
   _collectBar: {fileID: 1061691487}
@@ -1143,8 +1144,9 @@ MonoBehaviour:
   _gameOverStars: {fileID: 1507796602}
   _gameOverBG: {fileID: 833519633}
   _gameOverBTN: {fileID: 922196139}
-  _timeSlider: {fileID: 1993000634}
   _gmCanva: {fileID: 946583365}
+  _alertImagePrefab: {fileID: 1825590298488249853, guid: 975dea561ea9e3f46bd0ff8a2dec359f, type: 3}
+  _timeSlider: {fileID: 1993000634}
   _audioManagerScript: {fileID: 338697663}
   _barScript: {fileID: 408108075}
   _timeText: {fileID: 806828262}
@@ -1508,6 +1510,7 @@ GameObject:
   - component: {fileID: 833519634}
   - component: {fileID: 833519636}
   - component: {fileID: 833519635}
+  - component: {fileID: 833519637}
   m_Layer: 5
   m_Name: BGImg
   m_TagString: Untagged
@@ -1548,7 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1572,6 +1575,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833519633}
   m_CullTransparentMesh: 1
+--- !u!95 &833519637
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833519633}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ec7d9008ac23e44e961a6c6da6a986f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &922196139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameplayScript
   _collectBar: {fileID: 1061691489}
   _targetBar: {fileID: 408108075}
+  _tutorialPrefab: {fileID: 2961192541872457907, guid: 53c75700df28b8a4ca2da87ee27b83c8, type: 3}
 --- !u!1 &999715919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,7 +1784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &999715920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1907,7 +1933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7249ccb5b290046418c70ce1060d1070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectBarScript
-  BarIMG: {fileID: 1831414628}
+  _barIMG: {fileID: 1831414628}
+  _matchEffect: {fileID: 915428233895176844, guid: a9bb1146613f80c40a68695a79967243, type: 3}
+  _VFXMaskPrefab: {fileID: 6206860389662037318, guid: 81621b9d552259b43a3f9435a7635835, type: 3}
+  _gameplayHUD: {fileID: 946583365}
   _audioManagerScript: {fileID: 338697663}
 --- !u!1 &1085415155
 GameObject:
@@ -3468,7 +3497,7 @@ GameObject:
   - component: {fileID: 1831414631}
   - component: {fileID: 1831414630}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

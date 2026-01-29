@@ -69,12 +69,19 @@ public class ItemScript : MonoBehaviour
         _gmScript.AddItenOnBar(this.gameObject);
         _gmScript.TargetCount(_brain.Type);
         _imageRect.rotation = Quaternion.Euler(0, 0, 90);
-        
+        _gmScript.DestroyTutorial();
+
+
     }
 
     public int GetItemType()
     {
         return _brain.Type;
+    }
+
+    public Sprite GetItemSprite()
+    {
+        return _brain.Image;
     }
 
     public void ItemDestroyer()
@@ -86,15 +93,32 @@ public class ItemScript : MonoBehaviour
         }
         else
         {
+            GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
             StartCoroutine(DestroyAfterAudio());
         }
     }
 
+    public void SetInvisible(bool invisible)
+    {
+        if (invisible)
+        {
+            GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+        }
+    }
     private IEnumerator DestroyAfterAudio()
     {
         yield return new WaitWhile(() => _itemAudio.isPlaying);
 
         Destroy(this.gameObject);
     }
-    
+
+    public RectTransform GetSpriteRect()
+    {
+        return _imageRect;
+    }
+
 }
